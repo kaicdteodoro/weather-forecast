@@ -1,26 +1,33 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <v-app>
+    <v-main>
+      <v-container>
+        <search @submit="change"/>
+      </v-container>
+      <v-container class="mx-auto">
+        <weather :data="data"/>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import {defineAsyncComponent} from "vue";
 
 export default {
   name: 'App',
+  data: () => ({
+    data: undefined
+  }),
+  methods: {
+    change(value) {
+     this.data = value;
+    }
+  },
   components: {
-    HelloWorld
+    Search: defineAsyncComponent(() => import('@/components/SearchComponent.vue')),
+    Weather: defineAsyncComponent(() => import('@/components/WeatherComponent.vue')),
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
